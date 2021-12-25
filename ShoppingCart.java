@@ -7,6 +7,7 @@ import java.text.*;
  */
 public class ShoppingCart {
 
+
     private String title;
     private double price;
     private int quantity;
@@ -53,22 +54,7 @@ public class ShoppingCart {
         items.add(item);
     }
 
-    /**
-     * Formats shopping price.
-     *
-     * @return string as lines, separated with \n,
-     * first line: # Item Price Quan. Discount Total
-     * second line: ---------------------------------------------------------
-     * next lines: NN Title $PP.PP Q DD% $TT.TT
-     * 1 Some title $.30 2 - $.60
-     * 2 Some very long $100.00 1 50% $50.00
-     * ...
-     * 31 Item 42 $999.00 1000 - $999000.00
-     * end line: ---------------------------------------------------------
-     * last line: 31 $999050.60
-     *
-     * if no items in cart returns "No items." string.
-     */
+
     List<String[]> lines = new ArrayList<String[]>();
     int index = 0;
     double total = 0.00;
@@ -143,28 +129,33 @@ public class ShoppingCart {
         return sb.append("\n");
     }
 
-
-
+    /**
+     * Formats shopping price.
+     *
+     * @return string as lines, separated with \n,
+     * first line: # Item Price Quan. Discount Total
+     * second line: ---------------------------------------------------------
+     * next lines: NN Title $PP.PP Q DD% $TT.TT
+     * 1 Some title $.30 2 - $.60
+     * 2 Some very long $100.00 1 50% $50.00
+     * ...
+     * 31 Item 42 $999.00 1000 - $999000.00
+     * end line: ---------------------------------------------------------
+     * last line: 31 $999050.60
+     *
+     * if no items in cart returns "No items." string.
+     */
     public String formatTicket(){
         if (items.size() == 0)
             return "No items.";
-        // formatting each line
         lineFormatting();
-        // formatting table
-        // column max length
         columnMaxLength();
-        // line length
-        // header
         getHeader();
-        // separator
         getSeparator();
-        // lines
         getLines();
         if (lines.size() > 0) {
-            // separator
             getSeparator();
         }
-        // footer
         getFooter();
         return sb.toString();
     }
