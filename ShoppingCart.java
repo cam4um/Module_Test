@@ -117,6 +117,14 @@ public class ShoppingCart {
         return sb.append("\n");
     }
 
+    public List<String[]> getLines(){
+        for (String[] line : lines) {
+            for (int i = 0; i < line.length; i++)
+                appendFormatted(sb, line[i], align[i], width[i]);
+            sb.append("\n");
+        } return lines;
+    }
+
 
 
     public String formatTicket(){
@@ -146,11 +154,7 @@ public class ShoppingCart {
             sb.append("-");
         sb.append("\n");
         // lines
-        for (String[] line : lines) {
-            for (int i = 0; i < line.length; i++)
-                appendFormatted(sb, line[i], align[i], width[i]);
-            sb.append("\n");
-        }
+        getLines();
         if (lines.size() > 0) {
             // separator
             for (int i = 0; i < lineLength; i++)
