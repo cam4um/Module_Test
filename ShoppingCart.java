@@ -126,6 +126,15 @@ public class ShoppingCart {
     }
 
 
+    public StringBuilder getSeparator(){
+        int lineLength = width.length -1;
+        for (int w : width)
+            lineLength += w;
+        for (int i = 0; i < lineLength; i++)
+            sb.append("-");
+        return sb.append("\n");
+    }
+
 
     public String formatTicket(){
         if (items.size() == 0)
@@ -143,23 +152,17 @@ public class ShoppingCart {
         columnMaxLength();
 
         // line length
-        int lineLength = width.length - 1;
-        for (int w : width)
-            lineLength += w;
+       
 
         // header
         getHeader();
         // separator
-        for (int i = 0; i < lineLength; i++)
-            sb.append("-");
-        sb.append("\n");
+        getSeparator();
         // lines
         getLines();
         if (lines.size() > 0) {
             // separator
-            for (int i = 0; i < lineLength; i++)
-                sb.append("-");
-            sb.append("\n");
+            getSeparator();
         }
         // footer
         for (int i = 0; i < footer.length; i++)
