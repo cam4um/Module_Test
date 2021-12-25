@@ -136,24 +136,24 @@ public class ShoppingCart {
     }
 
 
+    public StringBuilder getFooter(){
+        String[] footer = { "","","","","", MONEY.format(total) };
+        for (int i = 0; i < footer.length; i++)
+            appendFormatted(sb, footer[i], align[i], width[i]);
+        return sb.append("\n");
+    }
+
+
+
     public String formatTicket(){
         if (items.size() == 0)
             return "No items.";
-
-
-
         // formatting each line
-
         lineFormatting();
-
-        String[] footer = { String.valueOf(index),"","","","", MONEY.format(total) };
         // formatting table
         // column max length
         columnMaxLength();
-
         // line length
-       
-
         // header
         getHeader();
         // separator
@@ -165,8 +165,7 @@ public class ShoppingCart {
             getSeparator();
         }
         // footer
-        for (int i = 0; i < footer.length; i++)
-            appendFormatted(sb, footer[i], align[i], width[i]);
+        getFooter();
         return sb.toString();
     }
     // --- private section -----------------------------------------------------
