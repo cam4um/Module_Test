@@ -89,13 +89,30 @@ public class ShoppingCart {
         }
         return items;
     }
-    
+
+
+    String[] header = {"#","Item","Price","Quan.","Discount","Total"};
+    int[] width = new int[]{0,0,0,0,0,0};
+
+    public List columnMaxLength(){
+        String[] footer = { "","","","","", MONEY.format(total) };
+        for (String[] line : lines)
+            for (int i = 0; i < line.length; i++)
+                width[i] = (int) Math.max(width[i], line[i].length());
+        for (int i = 0; i < header.length; i++)
+            width[i] = (int) Math.max(width[i], header[i].length());
+        for (int i = 0; i < footer.length; i++)
+            width[i] = (int) Math.max(width[i], footer[i].length());
+        return lines;
+    }
+
+
 
     public String formatTicket(){
         if (items.size() == 0)
             return "No items.";
 
-        String[] header = {"#","Item","Price","Quan.","Discount","Total"};
+
         int[] align = new int[] { 1, -1, 1, 1, 1, 1 };
         // formatting each line
 
@@ -104,14 +121,8 @@ public class ShoppingCart {
         String[] footer = { String.valueOf(index),"","","","", MONEY.format(total) };
         // formatting table
         // column max length
-        int[] width = new int[]{0,0,0,0,0,0};
-        for (String[] line : lines)
-            for (int i = 0; i < line.length; i++)
-                width[i] = (int) Math.max(width[i], line[i].length());
-        for (int i = 0; i < header.length; i++)
-            width[i] = (int) Math.max(width[i], header[i].length());
-        for (int i = 0; i < footer.length; i++)
-            width[i] = (int) Math.max(width[i], footer[i].length());
+        columnMaxLength();
+
         // line length
         int lineLength = width.length - 1;
         for (int w : width)
