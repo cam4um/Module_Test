@@ -69,15 +69,11 @@ public class ShoppingCart {
      *
      * if no items in cart returns "No items." string.
      */
-    public String formatTicket(){
-        if (items.size() == 0)
-            return "No items.";
-        List<String[]> lines = new ArrayList<String[]>();
-        String[] header = {"#","Item","Price","Quan.","Discount","Total"};
-        int[] align = new int[] { 1, -1, 1, 1, 1, 1 };
-        // formatting each line
-        double total = 0.00;
-        int index = 0;
+    List<String[]> lines = new ArrayList<String[]>();
+    int index = 0;
+    double total = 0.00;
+
+    public List lineFormatting(){
         for (ShoppingCart item : items) {
             int discount = calculateDiscount(item.type, item.quantity);
             double itemTotal = item.price * item.quantity * (100.00 - discount) / 100.00;
@@ -87,10 +83,24 @@ public class ShoppingCart {
                     MONEY.format(item.price),
                     String.valueOf(item.quantity),
                     (discount == 0) ? "-" : (String.valueOf(discount) + "%"),
-                    MONEY.format(itemTotal)
+                    MONEY.format(itemTotal),
             });
             total += itemTotal;
         }
+        return items;
+    }
+    
+
+    public String formatTicket(){
+        if (items.size() == 0)
+            return "No items.";
+
+        String[] header = {"#","Item","Price","Quan.","Discount","Total"};
+        int[] align = new int[] { 1, -1, 1, 1, 1, 1 };
+        // formatting each line
+
+        lineFormatting();
+
         String[] footer = { String.valueOf(index),"","","","", MONEY.format(total) };
         // formatting table
         // column max length
