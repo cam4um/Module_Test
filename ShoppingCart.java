@@ -107,13 +107,24 @@ public class ShoppingCart {
     }
 
 
+    StringBuilder sb = new StringBuilder();
+    int[] align = new int[] { 1, -1, 1, 1, 1, 1 };
+
+    public StringBuilder getHeader() {
+        for (int i = 0; i < header.length; i++)
+            appendFormatted(sb, header[i], align[i], width[i]);
+
+        return sb.append("\n");
+    }
+
+
 
     public String formatTicket(){
         if (items.size() == 0)
             return "No items.";
 
 
-        int[] align = new int[] { 1, -1, 1, 1, 1, 1 };
+
         // formatting each line
 
         lineFormatting();
@@ -127,11 +138,9 @@ public class ShoppingCart {
         int lineLength = width.length - 1;
         for (int w : width)
             lineLength += w;
-        StringBuilder sb = new StringBuilder();
+
         // header
-        for (int i = 0; i < header.length; i++)
-            appendFormatted(sb, header[i], align[i], width[i]);
-        sb.append("\n");
+        getHeader();
         // separator
         for (int i = 0; i < lineLength; i++)
             sb.append("-");
